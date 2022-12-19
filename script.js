@@ -20,14 +20,15 @@ const finalMessage = document.getElementById('final-message')
 const rows = 10
 const columns = 10
 
-const blackList = []
+const winningScore = (rows * columns) - 16
+
 
 function generateCell(content) {
     const cell = document.createElement('div')
     cell.classList.add('cell')
     cell.append(content)
     cell.value = content
-
+    
     return cell
 }
 
@@ -35,13 +36,13 @@ function appendCell(content) {
     grid.appendChild(content)
 }
 
-function generateUniqueRandomNumber() {
+function generateUniqueRandomNumber(blackList) {
     let randomNumber 
-
+    
     do {
         randomNumber = Math.floor(Math.random() * (rows * columns) + 1)
     } while (blackList.includes(randomNumber));
-  
+    
     blackList.push(randomNumber)
     
     return randomNumber
@@ -52,20 +53,21 @@ function generateUniqueRandomNumber() {
 button.addEventListener('click', function (){
     playMessage.classList.add('d-none')
     grid.classList.remove('d-none')
+
     button.innerText = 'Ricomincia'
     button.classList.add('btn', 'btn-primary', 'px-1', 'rounded')
+    
     finalMessage.classList.add('d-none')
-
     let score = 0
-
     grid.innerHTML = ''
-
+    const blackList = []
+    
     for (let i = 0; i < 16; i++){
-        generateUniqueRandomNumber()
+        generateUniqueRandomNumber(blackList)
     }
-
+    
     for (let i = 1; i <= rows*columns; i++){
-
+        
         const cell = generateCell(i)
         
         appendCell(cell)
@@ -75,20 +77,28 @@ button.addEventListener('click', function (){
         }
         
         cell.addEventListener('click', function(){
+            
             cell.classList.add('clicked')
             console.log(i)
-
+            
             
             if (cell.classList.contains('bomb', 'clicked')){
+                
                 finalMessage.innerHTML = `Mi dispiace, hai perso.<br>Il tuo punteggio: ${score}`
                 
                 finalMessage.classList.remove('d-none')
-                                
-            } else {
+                
+            } else if (cell.classList.contains('clicked')){
                 score++
             }
+            
+            if (score == winningScore){
+                finalMessage.innerHTML = `Complimenti! Hai Vinto!<br>Il tuo punteggio: ${score}`
+                        
+                finalMessage.classList.remove('d-none')
+            }
+            
         })
+        
     }
-
-
 })
