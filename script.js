@@ -25,6 +25,7 @@ function generateCell(content) {
     const cell = document.createElement('div')
     cell.classList.add('cell')
     cell.append(content)
+    cell.value = content
 
     return cell
 }
@@ -42,7 +43,6 @@ function generateUniqueRandomNumber() {
   
     blackList.push(randomNumber)
     
-
     return randomNumber
 }
 
@@ -55,9 +55,14 @@ button.addEventListener('click', function (){
     button.classList.add('btn', 'btn-primary', 'px-1', 'rounded')
 
     grid.innerHTML = ''
-    for (let i = 0; i < rows*columns; i++){
 
-        const cell = generateCell(i + 1)
+    for (let i = 0; i < 16; i++){
+        generateUniqueRandomNumber()
+    }
+
+    for (let i = 1; i <= rows*columns; i++){
+
+        const cell = generateCell(i)
         
         cell.addEventListener('click', function(){
             cell.classList.add('clicked')
@@ -66,6 +71,9 @@ button.addEventListener('click', function (){
 
         appendCell(cell)
         
+        if (blackList.includes(cell.value)) {
+            cell.classList.add('bomb')
+        }
 
     }
 
