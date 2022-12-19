@@ -26,6 +26,10 @@ main{
     height: calc(100vh - 160px);
 }
 
+h2{
+    margin: 0 20px;
+}
+
 #grid{
     height: 700px;
     width: 700px;
@@ -46,6 +50,8 @@ main{
     background-color: dodgerblue;
 
     cursor: pointer;
+
+    transition: all 0.5s;
 }
 
 #grid .cell.clicked{
@@ -54,6 +60,11 @@ main{
 }
 
 #grid .cell.clicked.bomb{
+    background-color: red;
+    color: black;
+}
+
+#grid .cell.bomb.revealed{
     background-color: red;
     color: black;
 }

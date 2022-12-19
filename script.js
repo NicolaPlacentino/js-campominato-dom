@@ -15,6 +15,7 @@ cioè il numero di volte che l’utente ha cliccato su una cella che non era una
 const grid = document.getElementById('grid')
 const button = document.getElementById('button')
 const playMessage = document.getElementById('play-message')
+const finalMessage = document.getElementById('final-message')
 
 const rows = 10
 const columns = 10
@@ -53,6 +54,9 @@ button.addEventListener('click', function (){
     grid.classList.remove('d-none')
     button.innerText = 'Ricomincia'
     button.classList.add('btn', 'btn-primary', 'px-1', 'rounded')
+    finalMessage.classList.add('d-none')
+
+    let score = 0
 
     grid.innerHTML = ''
 
@@ -64,17 +68,26 @@ button.addEventListener('click', function (){
 
         const cell = generateCell(i)
         
-        cell.addEventListener('click', function(){
-            cell.classList.add('clicked')
-            console.log(i + 1)
-        })
-
         appendCell(cell)
         
         if (blackList.includes(cell.value)) {
             cell.classList.add('bomb')
         }
+        
+        cell.addEventListener('click', function(){
+            cell.classList.add('clicked')
+            console.log(i)
 
+            
+            if (cell.classList.contains('bomb', 'clicked')){
+                finalMessage.innerHTML = `Mi dispiace, hai perso.<br>Il tuo punteggio: ${score}`
+                
+                finalMessage.classList.remove('d-none')
+                                
+            } else {
+                score++
+            }
+        })
     }
 
 
