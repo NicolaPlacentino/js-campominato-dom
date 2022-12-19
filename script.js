@@ -62,6 +62,8 @@ button.addEventListener('click', function (){
     grid.innerHTML = ''
     const blackList = []
     
+    gameOngoing = true
+
     for (let i = 0; i < 16; i++){
         generateUniqueRandomNumber(blackList)
     }
@@ -78,25 +80,33 @@ button.addEventListener('click', function (){
         
         cell.addEventListener('click', function(){
             
-            cell.classList.add('clicked')
-            console.log(i)
-            
-            
-            if (cell.classList.contains('bomb', 'clicked')){
+            if (gameOngoing) {
+                cell.classList.add('clicked')
+                console.log(i)
                 
-                finalMessage.innerHTML = `Mi dispiace, hai perso.<br>Il tuo punteggio: ${score}`
+                if (cell.classList.contains('bomb', 'clicked')){
+                    
+                    finalMessage.innerHTML = `Mi dispiace, hai perso.<br>Il tuo punteggio: ${score}`
+                    
+                    finalMessage.classList.remove('d-none')
+                    
+                    gameOngoing = false
+
+                } else if (cell.classList.contains('clicked')){
+                    score++
+                }
                 
-                finalMessage.classList.remove('d-none')
+                if (score == winningScore){
+                    finalMessage.innerHTML = `Complimenti! Hai Vinto!<br>Il tuo punteggio: ${score}`
+                            
+                    finalMessage.classList.remove('d-none')
+
+                    gameOngoing = false
+
+                }
                 
-            } else if (cell.classList.contains('clicked')){
-                score++
             }
             
-            if (score == winningScore){
-                finalMessage.innerHTML = `Complimenti! Hai Vinto!<br>Il tuo punteggio: ${score}`
-                        
-                finalMessage.classList.remove('d-none')
-            }
             
         })
         
