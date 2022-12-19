@@ -19,6 +19,7 @@ const playMessage = document.getElementById('play-message')
 const rows = 10
 const columns = 10
 
+const blackList = []
 
 function generateCell(content) {
     const cell = document.createElement('div')
@@ -32,9 +33,26 @@ function appendCell(content) {
     grid.appendChild(content)
 }
 
+function generateUniqueRandomNumber() {
+    let randomNumber 
+
+    do {
+        randomNumber = Math.floor(Math.random() * (rows * columns) + 1)
+    } while (blackList.includes(randomNumber));
+  
+    blackList.push(randomNumber)
+    
+
+    return randomNumber
+}
+
+
+
 button.addEventListener('click', function (){
     playMessage.classList.add('d-none')
     grid.classList.remove('d-none')
+    button.innerText = 'Ricomincia'
+    button.classList.add('btn', 'btn-primary', 'px-1', 'rounded')
 
     grid.innerHTML = ''
     for (let i = 0; i < rows*columns; i++){
@@ -50,4 +68,6 @@ button.addEventListener('click', function (){
         
 
     }
+
+
 })

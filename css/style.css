@@ -53,4 +53,9 @@ main{
     color: black;
 }
 
+#grid .cell.clicked.bomb{
+    background-color: red;
+    color: black;
+}
+
 /* utils */
